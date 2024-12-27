@@ -1,0 +1,11 @@
+
+    Python 3.8+
+    Streamlit
+    Hugging Face Transformers
+    PyTorch
+    PIL (Python Imaging Library)
+    NumPy
+    Matplotlib
+    Seaborn
+    Plotly
+    WordCloud
