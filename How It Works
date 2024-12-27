@@ -12,6 +12,7 @@
   - **Task**: Summarize a given piece of text.
   - **Input**: Paste a large block of text.
   - **Output**: A concise summary of the text.
+  - [View the results](summarization_results.pdf)
   
 - **Sentiment Analysis**:
   - **Task**: Analyze the sentiment of a text.
