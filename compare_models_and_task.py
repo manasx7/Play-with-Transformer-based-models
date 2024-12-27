@@ -57,8 +57,18 @@ def load_custom_model(model_file, task: str):
 
 def summarize(model_name: str, text: str, max_words: int = 500): 
     summarizer = pipeline("summarization", model=model_name)
-    max_length_tokens = int(max_words * 1.33)  
-    summary = summarizer(text, max_length=max_length_tokens, min_length=50, do_sample=False)   
+    max_length_tokens = int(max_words * 1.33)
+    
+    # Check the length of the input text and adjust max_length_tokens if necessary
+    input_length = len(text.split())  # Count words, or use len(text) for characters
+    
+    # If the input is smaller than the max_length, adjust the max length
+    if input_length <= max_words:
+        max_length_tokens = input_length  # Use a smaller value for short input
+    
+    # Perform the summarization
+    summary = summarizer(text, max_length=max_length_tokens, min_length=50, do_sample=False)
+       
     return summary[0]['summary_text']
 
 def sentiment(model_name: str, text: str): 
