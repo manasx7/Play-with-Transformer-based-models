@@ -4,3 +4,4 @@ torch>=1.9.0
 Pillow
 matplotlib
 seaborn
+wordcloud
