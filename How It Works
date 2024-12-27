@@ -1,6 +1,8 @@
-How It Works:-
+📌 How It Works:-
   -> Select a Task: Choose from summarization, sentiment analysis, zero-shot classification, text generation, or image classification.
   -> Model Selection: Choose from a list of pre-trained models or upload a custom model.
   -> Input Data: Provide the necessary input for the task (e.g., text for sentiment analysis or summarization, image for classification).
   -> Get Results: The model processes the input and displays results such as text, classifications, or visualizations (e.g., word clouds, bar charts).
   -> Visual Outputs: Depending on the task, the app generates and displays additional graphical outputs like word clouds or heatmaps.
+
+
