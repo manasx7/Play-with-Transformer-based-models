@@ -1,4 +1,4 @@
-# Play-with-Transformer-based-models
+# 🎈 Play-with-Transformer-based-models
 This project is a web-based application using Streamlit that allows users to interact with various transformer-based models for different machine learning tasks.
 
 The app leverages Hugging Face's Transformers library and other popular Python libraries to enable text and image processing tasks. It supports several pre-trained models and allows users to upload custom models for tasks such as text generation, sentiment analysis, summarization, zero-shot classification, and image classification.
@@ -25,15 +25,5 @@ Data Visualizations
     Probability Distributions: For text generation, a bar chart displays the probability distribution of the next predicted word.
     Heatmaps: For image classification, a heatmap is generated to visualize model attention on the image.
     
-Requirements
-    Python 3.8+
-    Streamlit
-    Hugging Face Transformers
-    PyTorch
-    PIL (Python Imaging Library)
-    NumPy
-    Matplotlib
-    Seaborn
-    Plotly
-    WordCloud
+
 
