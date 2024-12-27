@@ -1,10 +1,13 @@
-    Python 3.8+
+
     Streamlit
-    Hugging Face Transformers
+    transformers
     PyTorch
-    PIL (Python Imaging Library)
+    PIL 
     NumPy
     Matplotlib
     Seaborn
     Plotly
     WordCloud
+    os
+    time
+    torch
