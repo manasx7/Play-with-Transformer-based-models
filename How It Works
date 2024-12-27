@@ -1,4 +1,4 @@
-📌 How It Works:-
+#📌 How It Works:-
   -> Select a Task: Choose from summarization, sentiment analysis, zero-shot classification, text generation, or image classification.
   -> Model Selection: Choose from a list of pre-trained models or upload a custom model.
   -> Input Data: Provide the necessary input for the task (e.g., text for sentiment analysis or summarization, image for classification).
