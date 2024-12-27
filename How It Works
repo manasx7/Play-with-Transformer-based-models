@@ -1,29 +1,35 @@
-# 📌 How It Works:-
-  -> Select a Task: Choose from summarization, sentiment analysis, zero-shot classification, text generation, or image classification.
-  -> Model Selection: Choose from a list of pre-trained models or upload a custom model.
-  -> Input Data: Provide the necessary input for the task (e.g., text for sentiment analysis or summarization, image for classification).
-  -> Get Results: The model processes the input and displays results such as text, classifications, or visualizations (e.g., word clouds, bar charts).
-  -> Visual Outputs: Depending on the task, the app generates and displays additional graphical outputs like word clouds or heatmaps.
+# 📌 How It Works
 
-Example Usage
-    Summarization
-        Task: Summarize a given piece of text.
-        Input: Paste a large block of text.
-        Output: A concise summary of the text.
-    Sentiment Analysis
-        Task: Analyze the sentiment of a text.
-        Input: Paste a review or social media post.
-        Output: Sentiment result (positive/negative) along with a confidence score and word cloud of frequently occurring terms.
-    Zero-Shot Classification
-        Task: Classify text into predefined categories.
-        Input: Paste text and provide candidate labels (e.g., 'Technology', 'Health').
-        Output: Classification result with the most likely category and its confidence score.
-    Text Generation
-        Task: Generate text based on an input prompt.
-        Input: Provide an initial prompt.
-        Output: Continuation of the prompt with generated text and a chart showing the probability distribution of the next word.
-    Image Classification
-        Task: Classify an image.
-        Input: Upload an image.
-        Output: Classification results with confidence scores and optional custom labels.
+1. **Select a Task**: Choose from tasks like summarization, sentiment analysis, zero-shot classification, text generation, or image classification.
+2. **Model Selection**: Pick from a list of pre-trained models or upload your custom model.
+3. **Input Data**: Provide the necessary input for the selected task (e.g., text for sentiment analysis or summarization, image for classification).
+4. **Get Results**: The model processes the input and returns results, including text, classifications, or visual outputs (e.g., word clouds, bar charts).
+5. **Visual Outputs**: Depending on the task, graphical outputs like word clouds, heatmaps, or probability distributions are generated and displayed.
+
+### **Example Usage**
+
+- **Summarization**:
+  - **Task**: Summarize a given piece of text.
+  - **Input**: Paste a large block of text.
+  - **Output**: A concise summary of the text.
+  
+- **Sentiment Analysis**:
+  - **Task**: Analyze the sentiment of a text.
+  - **Input**: Paste a review or social media post.
+  - **Output**: Sentiment result (positive/negative) with a confidence score, plus a word cloud of frequently occurring terms.
+  
+- **Zero-Shot Classification**:
+  - **Task**: Classify text into predefined categories.
+  - **Input**: Paste text and provide candidate labels (e.g., 'Technology', 'Health').
+  - **Output**: Classification result with the most likely category and its confidence score.
+  
+- **Text Generation**:
+  - **Task**: Generate text based on an input prompt.
+  - **Input**: Provide an initial prompt.
+  - **Output**: Continuation of the prompt with generated text, and a chart showing the probability distribution of the next word.
+  
+- **Image Classification**:
+  - **Task**: Classify an image.
+  - **Input**: Upload an image.
+  - **Output**: Classification results with confidence scores and optional custom labels.
 
