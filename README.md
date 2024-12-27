@@ -17,28 +17,6 @@ Available Tasks
     4.  Text Generation: Generate text based on a prompt using various methods (sampling or beam search).
     5.  Image Classification: Upload images for classification with pre-trained models or custom labels.
 
-Example Usage
-    Summarization
-        Task: Summarize a given piece of text.
-        Input: Paste a large block of text.
-        Output: A concise summary of the text.
-    Sentiment Analysis
-        Task: Analyze the sentiment of a text.
-        Input: Paste a review or social media post.
-        Output: Sentiment result (positive/negative) along with a confidence score and word cloud of frequently occurring terms.
-    Zero-Shot Classification
-        Task: Classify text into predefined categories.
-        Input: Paste text and provide candidate labels (e.g., 'Technology', 'Health').
-        Output: Classification result with the most likely category and its confidence score.
-    Text Generation
-        Task: Generate text based on an input prompt.
-        Input: Provide an initial prompt.
-        Output: Continuation of the prompt with generated text and a chart showing the probability distribution of the next word.
-    Image Classification
-        Task: Classify an image.
-        Input: Upload an image.
-        Output: Classification results with confidence scores and optional custom labels.
-
 Custom Models
     You can upload your own model files (PyTorch .bin, .pt, or .zip) for any of the supported tasks. The app will automatically load and use these custom models for inference.
 
