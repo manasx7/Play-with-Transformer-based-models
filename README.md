@@ -1,6 +1,6 @@
 # 🎈 Play-with-Transformer-based-Models
 
-link - (https://transformer-based-models-playground.streamlit.app/)
+[Try The App](https://transformer-based-models-playground.streamlit.app/)
 
 This is a web-based application built with **Streamlit** that allows users to interact with various transformer-based models for a wide range of machine learning tasks. The app integrates Hugging Face's **Transformers** library and other popular Python tools, enabling real-time processing of text and images. 
 
