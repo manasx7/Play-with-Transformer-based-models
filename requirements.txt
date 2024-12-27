@@ -1,13 +1,12 @@
-
-    Streamlit
-    transformers
-    PyTorch
-    PIL 
-    NumPy
-    Matplotlib
-    Seaborn
-    Plotly
-    WordCloud
-    os
-    time
-    torch
+Streamlit
+transformers
+PyTorch
+PIL 
+NumPy
+Matplotlib
+Seaborn
+Plotly
+WordCloud
+os
+time
+torch
