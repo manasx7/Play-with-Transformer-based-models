@@ -1,11 +1,4 @@
-Streamlit
+streamlit
 transformers
-PIL 
-NumPy
-Matplotlib
-Seaborn
-Plotly
-WordCloud
-os
-time
-torch
+torch>=1.9.0
+Pillow
