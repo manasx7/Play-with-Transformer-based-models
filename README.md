@@ -40,31 +40,31 @@ Users can leverage pre-trained models or upload their own custom models for task
   - **Task**: Summarize a given piece of text.
   - **Input**: Paste a large block of text.
   - **Output**: A concise summary of the text.
-  - [View the results](summarization_results.pdf)
+  - [View the results](results/summarization_results.pdf)
   
 - **Sentiment Analysis**:
   - **Task**: Analyze the sentiment of a text.
   - **Input**: Paste a review or social media post.
   - **Output**: Sentiment result (positive/negative) with a confidence score, plus a word cloud of frequently occurring terms.
-  - [View the results](sentiment-analysis_results.pdf)
+  - [View the results](results/sentiment-analysis_results.pdf)
    
 - **Zero-Shot Classification**:
   - **Task**: Classify text into predefined categories.
   - **Input**: Paste text and provide candidate labels (e.g., 'Technology', 'Health').
   - **Output**: Classification result with the most likely category and its confidence score.
-  - [View the results](zero-shot-classification_results.pdf)
+  - [View the results](results/zero-shot-classification_results.pdf)
    
 - **Text Generation**:
   - **Task**: Generate text based on an input prompt.
   - **Input**: Provide an initial prompt.
   - **Output**: Continuation of the prompt with generated text, and a chart showing the probability distribution of the next word.
-  - [View the results](text-generation_results.pdf)
+  - [View the results](results/text-generation_results.pdf)
     
 - **Image Classification**:
   - **Task**: Classify an image.
   - **Input**: Upload an image.
   - **Output**: Classification results with confidence scores and optional custom labels.
-  - [View the results](image-classification_results.pdf)
+  - [View the results](results/image-classification_results.pdf)
     
 ### **Getting Started**
 Simply select your desired task, choose from a variety of pre-trained models or upload your custom model, and interact with the outputs in real time. With its interactive features and intuitive interface, this app is perfect for both beginners and advanced users exploring the power of transformer-based models.
