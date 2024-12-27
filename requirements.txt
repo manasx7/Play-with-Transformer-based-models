@@ -1,6 +1,5 @@
 Streamlit
 transformers
-PyTorch
 PIL 
 NumPy
 Matplotlib
