@@ -250,10 +250,10 @@ def main():
     elif task == "text-generation":
         generation_method = st.selectbox("Choose a generation method", ["sampling", "beam_search"])
         text = st.text_area("Enter text for text generation")
-        tokenizer = AutoTokenizer.from_pretrained(model_name)
-        model = AutoModelForCausalLM.from_pretrained(model_name)
         if text:           
             try:
+                tokenizer = AutoTokenizer.from_pretrained(model_name)
+                model = AutoModelForCausalLM.from_pretrained(model_name)
                 start_time = time.time() 
                 generated_text, next_word_probs = chat(model, tokenizer,text, generation_method)
                 end_time = time.time()  
