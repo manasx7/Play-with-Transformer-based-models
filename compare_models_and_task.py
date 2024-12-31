@@ -84,36 +84,22 @@ def classification(model_name: str, text: str, candidate_labels: list, hypothesi
     return f"The text is classified as '{label}' with a score of {score}"
 
 
-def chat(model_name: str, text: str, generation_method: str):
+def chat(model_name: str, text: str):
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForCausalLM.from_pretrained(model_name)
     input_ids = tokenizer.encode(text + tokenizer.eos_token, return_tensors="pt")
     attention_mask = torch.ones(input_ids.shape, device=input_ids.device)  # Default attention mask (1s for real tokens)
     outputs = torch.tensor([]).long().to(input_ids.device)
     input_ids = torch.cat([outputs, input_ids], dim=-1) if outputs.shape[0] > 0 else input_ids
-    if generation_method == "sampling":
-        outputs = model.generate(
-            input_ids,
-            max_length=100,
-            do_sample=True,
-            top_p=0.85,
-            top_k=50,
-            temperature=0.6,
-            num_return_sequences=1,
-            attention_mask=attention_mask,
-            pad_token_id=tokenizer.eos_token_id,            
-        )
-    elif generation_method == "beam_search":
-        outputs = model.generate(
+    
+    outputs = model.generate(
             input_ids,
              max_length=100,
              num_beams=3,
              early_stopping=True,
              attention_mask=attention_mask,
              pad_token_id=tokenizer.eos_token_id
-        )
-    else:
-        raise ValueError("Invalid generation method. Choose either 'sampling' or 'beam_search'.")
+    )
 
     # Decode the output and remove special tokens
     output = tokenizer.decode(outputs[:, input_ids.shape[-1]:][0], skip_special_tokens=True)
@@ -256,9 +242,9 @@ def main():
         text = st.text_area("Enter text for text generation")
         if text:           
             try:                
-                generation_method = st.selectbox("Choose a generation method", ["beam_search","sampling"])
+               
                 start_time = time.time() 
-                generated_text, next_word_probs = chat(model_name, text, generation_method)
+                generated_text, next_word_probs = chat(model_name, text)
                 end_time = time.time()  
 
                 st.subheader(f"Generated Text ({generation_method})")
