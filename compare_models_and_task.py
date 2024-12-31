@@ -251,12 +251,12 @@ def main():
                 st.error(f"Error during zero-shot-classification: {e}") 
 
     elif task == "text-generation":
-        generation_method = st.selectbox("Choose a generation method", ["sampling", "beam_search"])
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        model = AutoModelForCausalLM.from_pretrained(model_name)
         text = st.text_area("Enter text for text generation")
         if text:           
-            try:
-                tokenizer = AutoTokenizer.from_pretrained(model_name)
-                model = AutoModelForCausalLM.from_pretrained(model_name)
+            try:                
+                generation_method = st.selectbox("Choose a generation method", ["beam_search","sampling"])
                 start_time = time.time() 
                 generated_text, next_word_probs = chat(model, tokenizer,text, generation_method)
                 end_time = time.time()  
