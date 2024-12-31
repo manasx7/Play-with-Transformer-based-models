@@ -258,7 +258,7 @@ def main():
             try:                
                 generation_method = st.selectbox("Choose a generation method", ["beam_search","sampling"])
                 start_time = time.time() 
-                generated_text, next_word_probs = chat(model, tokenizer,text, generation_method)
+                generated_text, next_word_probs = chat(model_name, text, generation_method)
                 end_time = time.time()  
 
                 st.subheader(f"Generated Text ({generation_method})")
