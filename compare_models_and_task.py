@@ -246,9 +246,6 @@ def main():
                 start_time = time.time() 
                 generated_text, next_word_probs = chat(model_name, text)
                 end_time = time.time()  
-
-                st.subheader(f"Generated Text ({generation_method})")
-                st.write(generated_text)
                 st.write(f"Processing time: {end_time - start_time:.2f} seconds") 
 
                 fig = px.bar(x=list(range(len(next_word_probs))), y=next_word_probs, labels={'x': 'Token Index', 'y': 'Probability'})
