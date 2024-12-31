@@ -84,7 +84,9 @@ def classification(model_name: str, text: str, candidate_labels: list, hypothesi
     return f"The text is classified as '{label}' with a score of {score}"
 
 
-def chat(model,tokenizer, text: str, generation_method: str):
+def chat(model_name: str, text: str, generation_method: str):
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModelForCausalLM.from_pretrained(model_name)
     input_ids = tokenizer.encode(text + tokenizer.eos_token, return_tensors="pt")
     attention_mask = torch.ones(input_ids.shape, device=input_ids.device)  # Default attention mask (1s for real tokens)
     outputs = torch.tensor([]).long().to(input_ids.device)
@@ -251,8 +253,6 @@ def main():
                 st.error(f"Error during zero-shot-classification: {e}") 
 
     elif task == "text-generation":
-        tokenizer = AutoTokenizer.from_pretrained(model_name)
-        model = AutoModelForCausalLM.from_pretrained(model_name)
         text = st.text_area("Enter text for text generation")
         if text:           
             try:                
