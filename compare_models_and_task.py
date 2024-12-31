@@ -84,47 +84,34 @@ def classification(model_name: str, text: str, candidate_labels: list, hypothesi
     return f"The text is classified as '{label}' with a score of {score}"
 
 
-def chat(model_name: str, text: str, generation_method: str, temperature: int = 0.6, max_words: int = 100):
-    # Load the tokenizer and model
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForCausalLM.from_pretrained(model_name)
-
-    # Tokenize the input text
-    input_ids = tokenizer.encode(text + tokenizer.eos_token, return_tensors="pt")
-
-    # Ensure attention mask is created (padding tokens ignored by the model)
-    attention_mask = torch.ones(input_ids.shape, device=input_ids.device)
+def chat(model,tokenizer, text: str, generation_method: str):
     input_ids = tokenizer.encode(text + tokenizer.eos_token, return_tensors="pt")
     outputs = torch.tensor([]).long().to(input_ids.device)
     input_ids = torch.cat([outputs, input_ids], dim=-1) if outputs.shape[0] > 0 else input_ids
-    # Handle different generation methods
     if generation_method == "sampling":
         outputs = model.generate(
             input_ids,
-            max_length=max_words,
+            max_length=100,
             do_sample=True,
             top_p=0.85,
             top_k=50,
-            temperature=temperature,
+            temperature=0.6,
             num_return_sequences=1,
-            pad_token_id=tokenizer.eos_token_id,
-            attention_mask=attention_mask
+            pad_token_id=tokenizer.eos_token_id,            
         )
     elif generation_method == "beam_search":
         outputs = model.generate(
             input_ids,
-            max_length=max_words,
-            num_beams=5,
-            early_stopping=True,
-            num_return_sequences=1,
-            pad_token_id=tokenizer.eos_token_id,
-            attention_mask=attention_mask
+             max_length=100,
+             num_beams=3,
+             early_stopping=True,
+             pad_token_id=tokenizer.eos_token_id
         )
     else:
         raise ValueError("Invalid generation method. Choose either 'sampling' or 'beam_search'.")
 
     # Decode the output and remove special tokens
-    output = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    output = tokenizer.decode(outputs[:, input_ids.shape[-1]:][0], skip_special_tokens=True)
 
     # Compute the next word probabilities
     logits = model(input_ids).logits
@@ -261,15 +248,14 @@ def main():
                 st.error(f"Error during zero-shot-classification: {e}") 
 
     elif task == "text-generation":
-
         generation_method = st.selectbox("Choose a generation method", ["sampling", "beam_search"])
-        temperature = st.slider("Temperature", 0.0, 0.5, 0.7)
-        max_length = st.slider("Max length", 50, 100, 500)
         text = st.text_area("Enter text for text generation")
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        model = AutoModelForCausalLM.from_pretrained(model_name)
         if text:           
             try:
                 start_time = time.time() 
-                generated_text, next_word_probs = chat(model_name, text, generation_method, temperature, max_length)
+                generated_text, next_word_probs = chat(model, tokenizer,text, generation_method)
                 end_time = time.time()  
 
                 st.subheader(f"Generated Text ({generation_method})")
