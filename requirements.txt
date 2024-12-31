@@ -1,6 +1,6 @@
 streamlit
 transformers
-torch>=2.0.0
+torch
 Pillow
 matplotlib
 seaborn
