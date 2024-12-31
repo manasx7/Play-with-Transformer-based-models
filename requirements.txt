@@ -1,6 +1,6 @@
 streamlit
-transformers
-torch --upgrade
+transformers>=4.0.0
+torch>=1.10.0
 Pillow
 matplotlib
 seaborn
