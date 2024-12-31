@@ -10,6 +10,7 @@ from wordcloud import WordCloud
 import plotly.express as px
 import os
 
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 
 task_models = {
@@ -67,8 +68,7 @@ def summarize(model_name: str, text: str, max_words: int = 500):
         max_length_tokens = input_length  # Use a smaller value for short input
     
     # Perform the summarization
-    summary = summarizer(text, max_length=max_length_tokens, min_length=50, do_sample=False)
-       
+    summary = summarizer(text, max_length=max_length_tokens, min_length=50, do_sample=False)   
     return summary[0]['summary_text']
 
 def sentiment(model_name: str, text: str): 
@@ -83,20 +83,55 @@ def classification(model_name: str, text: str, candidate_labels: list, hypothesi
     score = result["scores"][0]
     return f"The text is classified as '{label}' with a score of {score}"
 
-def chat(model_name: str, text: str, generation_method: str):
+
+def chat(model_name: str, text: str, generation_method: str, temperature: int = 0.6, max_words: int = 100):
+    # Load the tokenizer and model
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForCausalLM.from_pretrained(model_name)
-    input_ids = tokenizer.encode(text + tokenizer.eos_token, return_tensors="pt") 
-    if generation_method == "sampling":
-        outputs = model.generate(input_ids, max_length=100, do_sample=True, top_p=0.85,  top_k=50, temperature=0.6, num_return_sequences=1, pad_token_id=tokenizer.eos_token_id)
-    elif generation_method == "beam_search":
-        outputs = model.generate(input_ids, max_length=100, num_beams=5, early_stopping=True, num_return_sequences=1, pad_token_id=tokenizer.eos_token_id )
 
-    output = tokenizer.decode(outputs[:, input_ids.shape[-1]:][0], skip_special_tokens=True)  
+    # Tokenize the input text
+    input_ids = tokenizer.encode(text + tokenizer.eos_token, return_tensors="pt")
+
+    # Ensure attention mask is created (padding tokens ignored by the model)
+    attention_mask = torch.ones(input_ids.shape, device=input_ids.device)
+    input_ids = tokenizer.encode(text + tokenizer.eos_token, return_tensors="pt")
+    outputs = torch.tensor([]).long().to(input_ids.device)
+    input_ids = torch.cat([outputs, input_ids], dim=-1) if outputs.shape[0] > 0 else input_ids
+    # Handle different generation methods
+    if generation_method == "sampling":
+        outputs = model.generate(
+            input_ids,
+            max_length=max_words,
+            do_sample=True,
+            top_p=0.85,
+            top_k=50,
+            temperature=temperature,
+            num_return_sequences=1,
+            pad_token_id=tokenizer.eos_token_id,
+            attention_mask=attention_mask
+        )
+    elif generation_method == "beam_search":
+        outputs = model.generate(
+            input_ids,
+            max_length=max_words,
+            num_beams=5,
+            early_stopping=True,
+            num_return_sequences=1,
+            pad_token_id=tokenizer.eos_token_id,
+            attention_mask=attention_mask
+        )
+    else:
+        raise ValueError("Invalid generation method. Choose either 'sampling' or 'beam_search'.")
+
+    # Decode the output and remove special tokens
+    output = tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+    # Compute the next word probabilities
     logits = model(input_ids).logits
     next_word_probs = torch.nn.functional.softmax(logits[0, -1], dim=-1).cpu().detach().numpy()
 
     return output, next_word_probs
+
     
 
 def perform_image_classification(model_name: str, image: Image, labels: list = None):
@@ -152,7 +187,8 @@ def main():
         uploaded_model = st.file_uploader("Upload model files (PyTorch .bin or folder)", type=["bin", "zip", "pt"])
         if uploaded_model:
             try:
-                model, tokenizer = load_custom_model(uploaded_model,task)
+                with st.spinner('Loading model...'):
+                    model, tokenizer = load_custom_model(uploaded_model,task)
                 st.success("Custom model loaded successfully!")
             except Exception as e:
                 st.error(f"Error loading custom model: {e}")
@@ -160,7 +196,8 @@ def main():
         model_name = st.text_input("Enter model name from Hugging Face (e.g., 'gpt2')")
         if model_name:
             try:
-                model, tokenizer = load_model_from_huggingface(model_name,task)
+                with st.spinner('Loading model...'):
+                    model, tokenizer = load_model_from_huggingface(model_name, task)
                 st.success(f"Model {model_name} loaded successfully!")
             except Exception as e:
                 st.error(f"Error loading model from Hugging Face: {e}")
@@ -224,12 +261,15 @@ def main():
                 st.error(f"Error during zero-shot-classification: {e}") 
 
     elif task == "text-generation":
+
+        generation_method = st.selectbox("Choose a generation method", ["sampling", "beam_search"])
+        temperature = st.slider("Temperature", 0.0, 0.5, 0.7)
+        max_length = st.slider("Max length", 50, 100, 500)
         text = st.text_area("Enter text for text generation")
-        generation_method = st.selectbox("Choose a generation method", ["sampling", "beam_search"])  
-        if text:
+        if text:           
             try:
                 start_time = time.time() 
-                generated_text, next_word_probs = chat(model_name, text, generation_method)
+                generated_text, next_word_probs = chat(model_name, text, generation_method, temperature, max_length)
                 end_time = time.time()  
 
                 st.subheader(f"Generated Text ({generation_method})")
